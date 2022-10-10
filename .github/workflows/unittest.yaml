@@ -1,0 +1,24 @@
+name: unittests
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: src/main/python
+      ENVIRONMENT_NAME: dev
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: preparing environment
+        run: pip install pybuilder
+      - name: install dependencies
+        run: pyb -v install_dependencies
+      - name: unittests
+        run: pyb

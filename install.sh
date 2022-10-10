@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+#. ./install.sh
+
 # -- copyright --
 
 # install.sh

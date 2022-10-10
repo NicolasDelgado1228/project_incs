@@ -1,0 +1,23 @@
+name: commit-checks
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  commit-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install packages
+        run: pip install black flake8 isort
+      - name: black-check
+        run: black src --check
+      - name: flake8-check
+        run: flake8 --select F401,F811,F821 src
+      - name: isort-check
+        run: isort --check --profile black src

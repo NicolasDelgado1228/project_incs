@@ -1,0 +1,48 @@
+name: 'Deploy functions'
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch to deploy
+        required: true
+        default: 'main'
+      functions:
+        description: Functions to deploy
+        required: true
+        default: "all"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_SERVICES: ${{ github.event.inputs.functions }}
+    steps:
+      - name: Checkout backend branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.inputs.branch}}
+      - name: Auth gcloud
+        uses: google-github-actions/auth@v0
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY}}
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID}}
+
+      - name: Copy dependencies
+        run: rsync -var "src/main/python/" "src/main/python/routes"
+
+      - name: Copy requirements file
+        run: cp requirements.txt src/main/python/routes
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install packages
+        run: pip install -U pip && pip install pybuilder
+      - name: Run pybuilder deploy task
+        run: pyb deploy
+        env:
+          GCP_PROJECT: ${{ secrets.SECRETS_GCP_PROJECT_ID}}

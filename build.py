@@ -7,6 +7,7 @@ import subprocess
 from os import environ as env
 from os import walk, rename
 from pybuilder.core import use_plugin, init, task
+import json
 
 # Pybuilder plugins
 use_plugin("python.core")

@@ -13,7 +13,9 @@ from firebase_admin import credentials, firestore, storage
 
 class Firestore:
     def __init__(self):
-        self.storage_path = os.environ.get("storage_path", "myapp.appspot.com")
+        self.storage_path = os.environ.get(
+            "storage_path", "atencion-conjunta.appspot.com"
+        )
         self.cred = credentials.ApplicationDefault()
 
         # init app

@@ -1,9 +1,9 @@
 # -*- copyright -*-
 
 # Dependencies
-from firestore.firestore_connection import Firestore
-from serializers.user_serializers import GetUserByIdSerializer
+# from firestore.firestore_connection import Firestore
 from models.user import User
+from serializers.user_serializers import GetUserByIdSerializer
 
 # firestore_controller.py
 # Author: Nicolas Delgado

@@ -1,8 +1,10 @@
 # Dependencies
 import json
-from utils.decorators import use_headers
-from serializers.user_serializers import GetUserByIdSerializer
+
 from firestore.firestore_controller import FirestoreController
+from flask import abort
+from serializers.user_serializers import GetUserByIdSerializer
+from utils.decorators import use_headers
 
 # user_routes.py
 # Author: Nicolas Delgado

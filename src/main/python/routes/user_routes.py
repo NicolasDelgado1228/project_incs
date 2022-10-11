@@ -54,7 +54,7 @@ def invite_patient_route(request, headers):
 
     if request_method == "GET":
         payload = SendInvitationSerializer(**request.args)
-        email_data = FirestoreController().invite_patient(payload)
+        email_data = FirestoreController().invite_patient(payload.dict())
     else:
         return abort(400)
 

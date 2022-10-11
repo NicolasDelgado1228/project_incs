@@ -21,7 +21,7 @@ class UserConfig(BaseModel):
 
 
 class User(BaseModel):
-    id: str
+    id: Optional[str]
     is_active: bool = True
     role: Optional[UserRole]
     name: Optional[str]

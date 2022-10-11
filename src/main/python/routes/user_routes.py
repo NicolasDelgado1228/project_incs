@@ -6,6 +6,8 @@ from flask import abort
 from serializers.user_serializers import GetUserByIdSerializer, SendInvitationSerializer
 from utils.decorators import use_headers
 
+from models.user import User
+
 # user_routes.py
 # Author: Nicolas Delgado
 
@@ -44,7 +46,7 @@ def _get_user_by_id_route(request, headers):
     return ({"users": response}, 200, headers)
 
 
-@use_headers(allowed_methods=["POST", "PUT"])
+@use_headers(allowed_methods=["POST"])
 def invite_patient_route(request, headers):
     request_method = request.method
 
@@ -52,10 +54,27 @@ def invite_patient_route(request, headers):
     if request_method == "OPTIONS":
         return ("", 200, headers)
 
-    if request_method == "GET":
+    if request_method == "POST":
         payload = SendInvitationSerializer(**request.args)
         email_data = FirestoreController().invite_patient(payload.dict())
     else:
         return abort(400)
 
     return ({"data": email_data}, 200, headers)
+
+
+@use_headers(allowed_methods=["POST"])
+def create_user_route(request, headers):
+    request_method = request.method
+
+    # Set CORS headers for the preflight request
+    if request_method == "OPTIONS":
+        return ("", 200, headers)
+
+    if request_method == "POST":
+        payload = User(**request.get_json())
+        user = FirestoreController().create_user(payload.dict())
+    else:
+        return abort(400)
+
+    return ({"user": user.dict()}, 200, headers)

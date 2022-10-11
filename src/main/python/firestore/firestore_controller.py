@@ -31,7 +31,7 @@ class FirestoreController:
 
     def create_user(self, payload: dict) -> User:
         user_id = str(uuid4)
-        user = {**payload.dict(), "id": user_id}
+        user = {**payload, "id": user_id}
         Firestore().fs_client.collection("USERS").document(user_id).set(**user)
         return User(**user)
 

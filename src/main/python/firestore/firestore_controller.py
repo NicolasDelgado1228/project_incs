@@ -42,7 +42,7 @@ class FirestoreController:
 
     def send_email(self, data: dict) -> None:
         fromEmail = "noreply@piyion.com"
-        toEmail = data["receiver_mail"]
+        toEmail = data["receiver_email"]
 
         message = MIMEMultipart()
         message["Subject"] = data["subject"]

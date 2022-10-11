@@ -41,8 +41,8 @@ class FirestoreController:
             user_ref.update(user.dict())
 
     def send_email(self, data: dict) -> None:
-        fromEmail = "proy.instituto@gmail.com"
-        toEmail = data["receiver_email"]
+        fromEmail = "noreply@piyion.com"
+        toEmail = data["receiver_mail"]
 
         message = MIMEMultipart()
         message["Subject"] = data["subject"]
@@ -54,8 +54,8 @@ class FirestoreController:
         textMessage = MIMEText(body, "html")
         message.attach(textMessage)
 
-        connection = SMTP("smtp.gmail.com", 465)
-        connection.login(fromEmail, "qicpeJ-xyrjy6-qirtap")
+        connection = SMTP("piyion.com", 465)
+        connection.login(fromEmail, "Piyion2021")
 
         try:
             connection.sendmail(fromEmail, rcpt, message.as_string())

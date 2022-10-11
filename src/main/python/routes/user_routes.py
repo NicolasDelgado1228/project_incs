@@ -24,7 +24,7 @@ def get_user_by_id_route(request, headers):
     else:
         return abort(400)
 
-    return ({"users": response}, 200, headers)
+    return ({"users": user}, 200, headers)
 
 
 def _get_user_by_id_route(request, headers):

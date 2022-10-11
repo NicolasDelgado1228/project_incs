@@ -9,3 +9,9 @@ from pydantic import BaseModel
 
 class GetUserByIdSerializer(BaseModel):
     user_id: str
+
+
+class SendInvitationSerializer(BaseModel):
+    email: str
+    name: str
+    lastname: str

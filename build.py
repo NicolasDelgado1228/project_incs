@@ -35,7 +35,7 @@ def set_properties(project):
         project.depends_on_requirements("requirements.txt")
 
     project.set_property("flake8_verbose_output", True)
-    project.set_property("flake8_exclude_patterns", "__init__.py")
+    project.set_property("flake8_exclude_patterns", "__init__.py, email_templates.py")
     project.set_property("flake8_ignore", "E711, W503")
     project.set_property("flake8_include_test_sources", True)
     project.set_property("flake8_break_build", True)

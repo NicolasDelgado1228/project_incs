@@ -28,9 +28,16 @@ class User(BaseModel):
     lastname: Optional[str]
     phone: Optional[str]
     email: Optional[EmailStr]
+    teacher_id: Optional[str] = None
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     config: UserConfig = UserConfig()
+
+    def _dict(self):
+        data = super().dict()
+        data["created_at"] = str(data["created_at"])
+        data["updated_at"] = str(data["updated_at"])
+        return data
 
     class Config:
         validate_assignment = True

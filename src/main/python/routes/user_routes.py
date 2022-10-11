@@ -21,7 +21,6 @@ def get_user_by_id_route(request, headers):
     if request_method == "GET":
         payload = str(request.args.get("user_id"))
         user = FirestoreController().get_user_by_id(payload)
-        response = json.loads(user.json())
     else:
         return abort(400)
 

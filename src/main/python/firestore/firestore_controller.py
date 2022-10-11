@@ -32,7 +32,7 @@ class FirestoreController:
 
     def create_user(self, user: dict) -> User:
         user_id = str(uuid4)
-        user["id"] = user_id
+        user["user_id"] = user_id
         user["created_at"] = datetime.now()
         Firestore().fs_client.collection("USERS").document(user_id).set(**user)
         return User(**user)

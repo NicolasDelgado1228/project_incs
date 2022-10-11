@@ -1,6 +1,7 @@
 # -*- copyright -*-
 
 # Dependencies
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP_SSL as SMTP
@@ -29,9 +30,10 @@ class FirestoreController:
 
         return {}
 
-    def create_user(self, payload: dict) -> User:
+    def create_user(self, user: dict) -> User:
         user_id = str(uuid4)
-        user = {**payload, "id": user_id}
+        user["id"] = user_id
+        user["created_at"] = datetime.now()
         Firestore().fs_client.collection("USERS").document(user_id).set(**user)
         return User(**user)
 

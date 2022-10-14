@@ -5,6 +5,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP_SSL as SMTP
+from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
 from models.user import User
@@ -33,6 +34,7 @@ class FirestoreController:
         doc_ref = Firestore().fs_client.collection("USERS").document(str(user.id))
         user_dict = user.dict()
         user_dict["created_at"] = datetime.now()
+        user_dict["id"] = doc_ref.id
         doc_ref.set(user_dict)
         return doc_ref.get().to_dict()
 

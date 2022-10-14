@@ -5,7 +5,6 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP_SSL as SMTP
-from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
 from models.user import User

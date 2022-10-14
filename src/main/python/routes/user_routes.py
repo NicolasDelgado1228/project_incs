@@ -64,16 +64,14 @@ def invite_patient_route(request, headers):
 
 @use_headers(allowed_methods=["POST"])
 def create_user_route(request, headers):
-    request_method = request.method
-
+    """Create User"""
     # Set CORS headers for the preflight request
-    if request_method == "OPTIONS":
+    if request.method == "OPTIONS":
         return ("", 200, headers)
 
-    if request_method == "POST":
-        payload = User(**request.get_json())
-        user = FirestoreController().create_user(payload.dict())
-    else:
-        return abort(400)
-
-    return ({"user": user.dict()}, 200, headers)
+    data = request.get_json()
+    if data:
+        payload = User(**data)
+        user_new = FirestoreController().create_user(payload)
+        return {"new_user": user_new}, 200, headers
+    return abort(400)

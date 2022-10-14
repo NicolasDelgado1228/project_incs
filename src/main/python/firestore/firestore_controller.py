@@ -30,12 +30,12 @@ class FirestoreController:
 
         return {}
 
-    def create_user(self, user: dict) -> User:
-        user_id = str(uuid4)
-        user["user_id"] = user_id
-        user["created_at"] = datetime.now()
-        Firestore().fs_client.collection("USERS").document(user_id).set(**user)
-        return User(**user)
+    def create_user(self, user: User) -> dict:
+        doc_ref = Firestore().fs_client.collection("USERS").document(str(user.id))
+        user_dict = user.dict()
+        user_dict["created_at"] = datetime.now()
+        doc_ref.set(user_dict)
+        return doc_ref.get().to_dict()
 
     def update_user(self, user: User) -> dict:
         user_ref = Firestore().fs_client.collection("USERS").document(user.id)

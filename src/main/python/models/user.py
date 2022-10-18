@@ -3,7 +3,7 @@
 # Dependencies
 from datetime import datetime
 from enum import Enum
-from typing import Optional
+from typing import Optional, List
 
 from pydantic import BaseModel, EmailStr, root_validator
 
@@ -28,7 +28,7 @@ class User(BaseModel):
     lastname: Optional[str]
     phone: Optional[str]
     email: Optional[EmailStr]
-    teacher_id: Optional[str] = None
+    teacher_id: Optional[List[str]] = None
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     config: UserConfig = UserConfig()

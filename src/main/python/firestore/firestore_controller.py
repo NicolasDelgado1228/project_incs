@@ -34,7 +34,9 @@ class FirestoreController:
         user_dict = user.dict()
         user_dict["created_at"] = datetime.now()
         user_dict["id"] = str(uuid4())
-        Firestore().fs_client.collection("USERS").document(str(user.id)).set(user_dict)
+        Firestore().fs_client.collection("USERS").document(str(user_dict["id"])).set(
+            user_dict
+        )
         return user_dict
 
     def update_user(self, user: User) -> dict:

@@ -28,7 +28,7 @@ def get_user_by_id_route(request, headers):
     return ({"users": user}, 200, headers)
 
 
-def _get_user_by_id_route(request, headers):
+def get_user_by_email_route(request, headers):
     request_method = request.method
 
     # Set CORS headers for the preflight request
@@ -36,8 +36,8 @@ def _get_user_by_id_route(request, headers):
         return ("", 200, headers)
 
     if request_method == "GET":
-        payload = GetUserByIdSerializer(**request.args)
-        user = FirestoreController().get_user_by_id(payload)
+        payload = str(request.args.get("email"))
+        user = FirestoreController().get_user_by_email(payload)
         response = json.loads(user.json())
     else:
         return abort(400)

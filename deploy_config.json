@@ -26,6 +26,15 @@
       "runtime": "python38",
       "trigger": "http",
       "flags": ""
+    },
+    {
+      "name": "get_user_by_email",
+      "entry_point": "get_user_by_email_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "user_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
     }
   ]
 }

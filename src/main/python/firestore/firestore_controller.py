@@ -24,7 +24,9 @@ class FirestoreController:
         return {}
 
     def get_user_by_email(self, email: str) -> dict:
-        response = Firestore().fs_client.collection("USERS").document(email).get()
+        response = (
+            Firestore().fs_client.collection("USERS").where("email", "==", email).get()
+        )
         if response.exists:
             return response.to_dict()
 

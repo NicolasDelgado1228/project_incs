@@ -20,7 +20,7 @@ name = "seed"
 version = "0.0.1"
 
 # Build tasks
-default_task = ["analyze", "isort", "unittest", "clean"]
+default_task = ["analyze", "isort", "clean"]  # "unittest", "clean"]
 
 
 # Environment

@@ -28,6 +28,7 @@ def get_user_by_id_route(request, headers):
     return ({"users": user}, 200, headers)
 
 
+@use_headers
 def get_user_by_email_route(request, headers):
     request_method = request.method
 

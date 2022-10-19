@@ -39,11 +39,10 @@ def get_user_by_email_route(request, headers):
     if request_method == "GET":
         payload = str(request.args.get("email"))
         user = FirestoreController().get_user_by_email(payload)
-        response = json.loads(user.json())
     else:
         return abort(400)
 
-    return ({"users": response}, 200, headers)
+    return ({"user": user}, 200, headers)
 
 
 @use_headers(allowed_methods=["POST"])

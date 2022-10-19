@@ -24,11 +24,15 @@ class FirestoreController:
         return {}
 
     def get_user_by_email(self, email: str) -> dict:
-        response = (
-            Firestore().fs_client.collection("USERS").where("email", "==", email).get()
-        )
-        if response.exists:
-            return response.to_dict()
+        response = [
+            document.to_dict()
+            for document in Firestore()
+            .fs_client.collection("USERS")
+            .where("email", "==", email)
+            .stream()
+        ]
+        if response:
+            return response[0]
 
         return {}
 

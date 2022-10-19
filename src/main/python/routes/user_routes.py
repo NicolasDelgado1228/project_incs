@@ -1,6 +1,4 @@
-# Dependencies
-import json
-
+# Dependenciess
 from firestore.firestore_controller import FirestoreController
 from flask import abort
 from models.user import User

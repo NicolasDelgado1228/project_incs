@@ -1,8 +1,8 @@
 # Dependenciess
 from firestore.firestore_controller import FirestoreController
 from flask import abort
-from utils.decorators import use_headers
 from models.activity import Activity
+from utils.decorators import use_headers
 
 # user_routes.py
 # Author: Nicolas Delgado

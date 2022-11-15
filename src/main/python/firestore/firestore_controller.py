@@ -9,6 +9,7 @@ from typing import List
 from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
+from models.activity import Activity
 from models.user import User
 from utils.email_templates import EmailTemplates
 
@@ -167,6 +168,16 @@ class FirestoreController:
             user_dict
         )
         return user_dict
+
+    def create_activity(selef, activity: Activity) -> dict:
+        activity_dict = activity.dict()
+        activity_dict["created_at"] = datetime.now()
+
+        Firestore().fs_client.collection("ACTIVITIES").document(
+            str(activity_dict["id"])
+        ).set(activity_dict)
+
+        return activity_dict
 
     def update_user(self, user: User) -> dict:
         user_ref = Firestore().fs_client.collection("USERS").document(user.id)

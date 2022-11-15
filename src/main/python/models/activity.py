@@ -3,6 +3,7 @@
 # Dependencies
 from datetime import datetime
 from typing import List, Optional
+from uuid import uuid4
 
 from pydantic import BaseModel
 
@@ -18,7 +19,7 @@ class Assignment(BaseModel):
 
 
 class Activity(BaseModel):
-    id: str
+    id: str = uuid4()
     owner: str
     assignments: Optional[List[Assignment]]
     created_at: datetime = datetime.now()

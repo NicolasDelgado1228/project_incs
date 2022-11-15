@@ -9,15 +9,6 @@ from pydantic import BaseModel
 
 # activity.py
 # Author: Nicolas Delgado
-
-
-class Assignment(BaseModel):
-    id: str
-    assigned_to: str
-    assigned_at: datetime = datetime.now()
-    answers: Optional[List[str]]
-
-
 class Activity(BaseModel):
     id: str = str(uuid4())
     owner: str

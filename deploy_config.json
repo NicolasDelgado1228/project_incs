@@ -80,6 +80,33 @@
       "runtime": "python38",
       "trigger": "http",
       "flags": ""
+    },
+    {
+      "name": "get_all_assignments_by_assigned_to",
+      "entry_point": "get_all_assignments_by_assigned_to_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "assignment_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
+    },
+    {
+      "name": "get_all_assignments_by_assigned_by",
+      "entry_point": "get_all_assignments_by_assigned_by_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "assignment_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
+    },
+    {
+      "name": "create_assignment",
+      "entry_point": "create_assignment_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "assignment_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
     }
   ]
 }

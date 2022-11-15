@@ -9,6 +9,7 @@ from typing import List
 from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
+from models.assignment import Assignment, State
 from models.activity import Activity
 from models.user import User
 from utils.email_templates import EmailTemplates
@@ -178,6 +179,17 @@ class FirestoreController:
         ).set(activity_dict)
 
         return activity_dict
+
+    def create_assignment(selef, assignment: Assignment) -> dict:
+        assignment_dict = assignment.dict()
+        assignment_dict["assigned_at"] = datetime.now()
+        assignment_dict["state"] = State.unstarted
+
+        Firestore().fs_client.collection("ASSIGNMENTS").document(
+            str(assignment_dict["id"])
+        ).set(assignment_dict)
+
+        return assignment_dict
 
     def update_user(self, user: User) -> dict:
         user_ref = Firestore().fs_client.collection("USERS").document(user.id)

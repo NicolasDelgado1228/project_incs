@@ -4,7 +4,7 @@ from flask import abort
 from models.activity import Activity
 from utils.decorators import use_headers
 
-# user_routes.py
+# activity_routes.py
 # Author: Nicolas Delgado
 
 

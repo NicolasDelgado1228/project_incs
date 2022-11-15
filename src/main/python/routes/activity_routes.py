@@ -17,8 +17,8 @@ def get_activity_by_id_route(request, headers):
         return ("", 200, headers)
 
     if request_method == "GET":
-        activity_id = str(request.args.get("activity_id"))
-        payload = {"activity_id": activity_id}
+        activity_id = str(request.args.get("id"))
+        payload = {"id": activity_id}
         activities = FirestoreController().generic_search(payload, "ACTIVITIES")
     else:
         return abort(400)

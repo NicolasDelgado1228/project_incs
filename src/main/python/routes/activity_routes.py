@@ -8,7 +8,7 @@ from utils.decorators import use_headers
 
 
 @use_headers
-def get_all_users_route(request, headers):
+def get_activity_by_id_route(request, headers):
     """GET all users endpoint route"""
     request_method = request.method
 
@@ -17,8 +17,10 @@ def get_all_users_route(request, headers):
         return ("", 200, headers)
 
     if request_method == "GET":
-        users = FirestoreController().get_all_users()
+        activity_id = str(request.args.get("activity_id"))
+        payload = {"activity_id": activity_id}
+        activities = FirestoreController().generic_search(payload, "ACTIVITIES")
     else:
         return abort(400)
 
-    return ({"users": users}, 200, headers)
+    return ({"activities": activities}, 200, headers)

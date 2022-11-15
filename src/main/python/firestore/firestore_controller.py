@@ -224,3 +224,11 @@ class FirestoreController:
         ]
 
         return users
+
+    def get_all_activities(self):
+        activities = [
+            activity.to_dict()
+            for activity in Firestore().fs_client.collection("ACTIVITIES").stream()
+        ]
+
+        return activities

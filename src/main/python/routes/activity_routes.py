@@ -10,7 +10,7 @@ from utils.decorators import use_headers
 
 @use_headers
 def get_activity_by_id_route(request, headers):
-    """GET all users endpoint route"""
+    """GET get_activity_by_id_route"""
     request_method = request.method
 
     # Set CORS headers for the preflight request
@@ -29,7 +29,7 @@ def get_activity_by_id_route(request, headers):
 
 @use_headers
 def get_activity_by_owner_route(request, headers):
-    """GET all users endpoint route"""
+    """GET get_activity_by_owner_route"""
     request_method = request.method
 
     # Set CORS headers for the preflight request
@@ -48,7 +48,7 @@ def get_activity_by_owner_route(request, headers):
 
 @use_headers(allowed_methods=["POST"])
 def create_activity_route(request, headers):
-    """Create User"""
+    """Create Activity"""
     # Set CORS headers for the preflight request
     if request.method == "OPTIONS":
         return ("", 200, headers)
@@ -59,3 +59,20 @@ def create_activity_route(request, headers):
         new_activity = FirestoreController().create_activity(payload)
         return {"new_activity": new_activity}, 200, headers
     return abort(400)
+
+
+@use_headers
+def get_all_activities_route(request, headers):
+    """GET all activities endpoint route"""
+    request_method = request.method
+
+    # Set CORS headers for the preflight request
+    if request_method == "OPTIONS":
+        return ("", 200, headers)
+
+    if request_method == "GET":
+        activities = FirestoreController().get_all_activities()
+    else:
+        return abort(400)
+
+    return ({"activities": activities}, 200, headers)

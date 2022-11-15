@@ -71,6 +71,15 @@
       "runtime": "python38",
       "trigger": "http",
       "flags": ""
+    },
+    {
+      "name": "get_all_activities",
+      "entry_point": "get_all_activities_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "activity_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
     }
   ]
 }

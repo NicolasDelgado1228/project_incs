@@ -62,6 +62,15 @@
       "runtime": "python38",
       "trigger": "http",
       "flags": ""
+    },
+    {
+      "name": "create_activity",
+      "entry_point": "create_activity_route",
+      "source_path": "src/main/python/routes",
+      "source_file": "activity_routes",
+      "runtime": "python38",
+      "trigger": "http",
+      "flags": ""
     }
   ]
 }

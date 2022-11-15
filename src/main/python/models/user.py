@@ -28,6 +28,7 @@ class User(BaseModel):
     lastname: Optional[str]
     phone: Optional[str]
     email: Optional[EmailStr]
+    password: Optional[str]
     patients_ids: Optional[List[str]] = [""]
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()

@@ -56,6 +56,6 @@ def create_assignment_route(request, headers):
     data = request.get_json()
     if data:
         payload = Assignment(**data)
-        new_activity = FirestoreController().create_assignment(payload)
-        return {"new_activity": new_activity}, 200, headers
+        new_assignment = FirestoreController().create_assignment(payload)
+        return {"new_assignment": new_assignment}, 200, headers
     return abort(400)

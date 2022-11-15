@@ -24,3 +24,22 @@ def get_activity_by_id_route(request, headers):
         return abort(400)
 
     return ({"activities": activities}, 200, headers)
+
+
+@use_headers
+def get_activity_by_owner_route(request, headers):
+    """GET all users endpoint route"""
+    request_method = request.method
+
+    # Set CORS headers for the preflight request
+    if request_method == "OPTIONS":
+        return ("", 200, headers)
+
+    if request_method == "GET":
+        owner_id = str(request.args.get("owner_id"))
+        payload = {"owner": owner_id}
+        activities = FirestoreController().generic_search(payload, "ACTIVITIES")
+    else:
+        return abort(400)
+
+    return ({"activities": activities}, 200, headers)

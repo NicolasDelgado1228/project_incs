@@ -73,3 +73,20 @@ def create_user_route(request, headers):
         user_new = FirestoreController().create_user(payload)
         return {"new_user": user_new}, 200, headers
     return abort(400)
+
+
+@use_headers
+def get_all_users_route(request, headers):
+    """GET all users endpoint route"""
+    request_method = request.method
+
+    # Set CORS headers for the preflight request
+    if request_method == "OPTIONS":
+        return ("", 200, headers)
+
+    if request_method == "GET":
+        users = FirestoreController().get_all_users()
+    else:
+        return abort(400)
+
+    return ({"users": users}, 200, headers)

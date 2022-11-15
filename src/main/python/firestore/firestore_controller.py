@@ -5,7 +5,7 @@ from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from smtplib import SMTP_SSL as SMTP
-from uuid import uuid4
+from typing import List
 
 from firestore.firestore_connection import Firestore
 from models.user import User
@@ -36,10 +36,132 @@ class FirestoreController:
 
         return {}
 
+    def generic_subupdate(self, payload) -> dict:
+        doc = (
+            Firestore()
+            .fs_client.collection(payload["main_collection"])
+            .document(payload["main_document"])
+            .collection(payload["collection"])
+            .document(payload["document"])
+        )
+        if doc.get().exists:
+            print(f"[LOG] updating document {payload['document']}")
+            doc.update(payload["data"])
+        else:
+            print("[LOG] Fail update. Doc not exist")
+        return doc.get().to_dict()
+
+    def generic_update(self, payload) -> dict:
+        doc = (
+            Firestore()
+            .fs_client.collection(payload["collection"])
+            .document(payload["document"])
+        )
+        payload["data"] = payload["data"]
+        if doc.get().exists:
+            doc.update(payload["data"])
+        return doc.get().to_dict()
+
+    def generic_subget(self, payload) -> object:
+        return (
+            Firestore()
+            .fs_client.collection(payload["main_collection"])
+            .document(payload["main_document"])
+            .collection(payload["collection"])
+            .document(payload["document"])
+            .get()
+            .to_dict()
+        )
+
+    def generic_get(self, payload) -> object:
+        return (
+            Firestore()
+            .fs_client.collection(payload["collection"])
+            .document(payload["document"])
+            .get()
+            .to_dict()
+        )
+
+    def generic_get_query_equal(self, payload) -> object:
+        return [
+            doc.to_dict()
+            for doc in Firestore()
+            .fs_client.collection(payload["collection"])
+            .where(payload["query_param"], "==", payload["param"])
+            .stream()
+        ]
+
+    def get_querysets(self, payload):
+        or_keys = payload.pop("or_fields", "").split(",")
+        or_fields = and_fields = {}
+
+        for key in payload:
+            if key in or_keys:
+                or_fields = {**or_fields, key: payload[key]}
+            else:
+                and_fields = {**and_fields, key: payload[key]}
+
+        return [{**and_fields, key: or_fields[key]} for key in or_fields]
+
+    def generic_search(
+        self, payload, collection, order_by=None, base=None
+    ) -> List[object]:
+        base = base if base else Firestore().fs_client.collection(collection)
+
+        querysets = self.get_querysets(payload)
+
+        # Return all if not payload provided
+        response = {doc.id: doc.to_dict() for doc in base.stream()}
+
+        if querysets:
+            for queryset in querysets:
+                query_base = base
+                for key in queryset:
+                    query_base = query_base.where(key, "==", queryset[key])
+
+                response = {
+                    **response,
+                    **{doc.id: doc.to_dict() for doc in query_base.stream()},
+                }
+        elif payload:
+            for key in payload:
+                base = base.where(key, "==", payload[key])
+            if order_by:
+                base = base.order_by(order_by)
+            response = {doc.id: doc.to_dict() for doc in base.stream()}
+
+        return list(response.values())
+
+    def generic_subsearch(
+        self,
+        payload,
+        main_collection,
+        main_document,
+        collection,
+        order_by=None,
+        base=None,
+    ):
+        return self.generic_search(payload, collection, order_by=order_by, base=base)
+
+    def generic_delete_document(self, payload) -> object:
+        doc_ref = (
+            Firestore()
+            .fs_client.collection(payload["collection"])
+            .document(payload["document"])
+        )
+        if doc_ref.get().exists:
+            doc_ref.delete()
+            print("[LOG] Document deleted successfully!")
+            return True
+
+        print("[LOG] El documento no existe!")
+
+        return False
+
     def create_user(self, user: User) -> dict:
         user_dict = user.dict()
         user_dict["created_at"] = datetime.now()
-        user_dict["id"] = str(uuid4())
+        # user_dict["id"] = str(uuid4())
         Firestore().fs_client.collection("USERS").document(str(user_dict["id"])).set(
             user_dict
         )
@@ -82,3 +204,11 @@ class FirestoreController:
         self.send_email(data)
 
         return data
+
+    def get_all_users(self):
+        users = [
+            user.to_dict()
+            for user in Firestore().fs_client.collection("USERS").stream()
+        ]
+
+        return users

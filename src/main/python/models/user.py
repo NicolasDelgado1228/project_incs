@@ -28,7 +28,7 @@ class User(BaseModel):
     lastname: Optional[str]
     phone: Optional[str]
     email: Optional[EmailStr]
-    teacher_id: Optional[List[str]] = None
+    patients_ids: Optional[List[str]] = [""]
     created_at: datetime = datetime.now()
     updated_at: datetime = datetime.now()
     config: UserConfig = UserConfig()

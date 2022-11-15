@@ -9,6 +9,8 @@ from pydantic import BaseModel
 
 # activity.py
 # Author: Nicolas Delgado
+
+
 class Activity(BaseModel):
     id: str = str(uuid4())
     owner: str

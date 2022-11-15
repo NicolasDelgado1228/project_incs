@@ -1,7 +1,6 @@
 # Dependenciess
 from firestore.firestore_controller import FirestoreController
 from flask import abort
-
 from models.assignment import Assignment
 from utils.decorators import use_headers
 

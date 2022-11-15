@@ -20,6 +20,7 @@ class State(str, Enum):
 
 class Assignment(BaseModel):
     id: str = str(uuid4())
+    activity_id: str
     assigned_to: str
     assigned_by: str
     state: Optional[State]

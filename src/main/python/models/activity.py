@@ -19,7 +19,7 @@ class Assignment(BaseModel):
 
 
 class Activity(BaseModel):
-    id: str = uuid4()
+    id: str = str(uuid4())
     owner: str
     assignments: Optional[List[Assignment]]
     created_at: datetime = datetime.now()

@@ -9,8 +9,8 @@ from typing import List
 from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
-from models.activity import Activity, Card
-from models.assignment import Assignment, State, Answer
+from models.activity import Activity
+from models.assignment import Assignment, State
 from models.user import User
 from utils.email_templates import EmailTemplates
 

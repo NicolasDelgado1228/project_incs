@@ -171,7 +171,7 @@ class FirestoreController:
         return user_dict
 
     def create_activity(selef, activity: Activity) -> dict:
-        activity_dict = activity.dict()
+        activity_dict = activity.dict(exclude_none=True)
         activity_dict["created_at"] = datetime.now()
 
         Firestore().fs_client.collection("ACTIVITIES").document(
@@ -181,7 +181,7 @@ class FirestoreController:
         return activity_dict
 
     def create_assignment(selef, assignment: Assignment) -> dict:
-        assignment_dict = assignment.dict()
+        assignment_dict = assignment.dict(exclude_none=True)
         assignment_dict["assigned_at"] = datetime.now()
         assignment_dict["state"] = State.unstarted
 

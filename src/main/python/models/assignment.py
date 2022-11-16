@@ -31,4 +31,3 @@ class Assignment(BaseModel):
     assigned_by: str
     state: Optional[State]
     assigned_at: datetime = datetime.now()
-    answers: Optional[List[Answer]] = []

@@ -24,4 +24,3 @@ class Activity(BaseModel):
     owner: str
     created_at: datetime = datetime.now()
     description: Optional[str]
-    cards: Optional[List[Card]]

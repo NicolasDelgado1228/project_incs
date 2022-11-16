@@ -9,8 +9,8 @@ from typing import List
 from uuid import uuid4
 
 from firestore.firestore_connection import Firestore
-from models.activity import Activity
-from models.assignment import Assignment, State
+from models.activity import Activity, Card
+from models.assignment import Assignment, State, Answer
 from models.user import User
 from utils.email_templates import EmailTemplates
 
@@ -190,6 +190,26 @@ class FirestoreController:
         ).set(assignment_dict)
 
         return assignment_dict
+
+    def create_card_activity(self, payload) -> dict:
+        payload["id"] = str(uuid4())
+        payload["created_at"] = datetime.now()
+
+        Firestore().fs_client.collection("ACTIVITIES").document(
+            str(payload["activity_id"])
+        ).collection("CARDS").document(payload["id"]).set(payload)
+
+        return payload
+
+    def create_answer_assignment(self, payload) -> dict:
+        payload["id"] = str(uuid4())
+        payload["created_at"] = datetime.now()
+
+        Firestore().fs_client.collection("ASSIGNMENTS").document(
+            str(payload["assignment_id"])
+        ).collection("ANSWERS").document(payload["id"]).set(payload)
+
+        return payload
 
     def update_user(self, user: User) -> dict:
         user_ref = Firestore().fs_client.collection("USERS").document(user.id)

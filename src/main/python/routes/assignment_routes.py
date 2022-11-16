@@ -29,7 +29,7 @@ def get_all_assignments_by_assigned_to_route(request, headers):
 
 @use_headers
 def get_all_assignments_by_assigned_by_route(request, headers):
-    """GET get_all_assignments_by_assigned_to"""
+    """GET get_all_assignments_by_assigned_by"""
     request_method = request.method
 
     # Set CORS headers for the preflight request
@@ -37,8 +37,8 @@ def get_all_assignments_by_assigned_by_route(request, headers):
         return ("", 200, headers)
 
     if request_method == "GET":
-        assigned_to = str(request.args.get("assigned_by"))
-        payload = {"assigned_by": assigned_to}
+        assigned_by = str(request.args.get("assigned_by"))
+        payload = {"assigned_by": assigned_by}
         assignments = FirestoreController().generic_search(payload, "ASSIGNMENTS")
     else:
         return abort(400)
@@ -58,4 +58,19 @@ def create_assignment_route(request, headers):
         payload = Assignment(**data)
         new_assignment = FirestoreController().create_assignment(payload)
         return {"new_assignment": new_assignment}, 200, headers
+    return abort(400)
+
+
+# Pendiente
+@use_headers(allowed_methods=["POST"])
+def create_answer_route(request, headers):
+    """Create Answer"""
+    # Set CORS headers for the preflight request
+    if request.method == "OPTIONS":
+        return ("", 200, headers)
+
+    payload = request.get_json()
+    if payload:
+        new_answer_assignment = FirestoreController().create_answer_assignment(payload)
+        return {"new_answer_assignment": new_answer_assignment}, 200, headers
     return abort(400)

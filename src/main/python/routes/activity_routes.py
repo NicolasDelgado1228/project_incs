@@ -61,6 +61,21 @@ def create_activity_route(request, headers):
     return abort(400)
 
 
+# Pendiente
+@use_headers(allowed_methods=["POST"])
+def create_card_activity_route(request, headers):
+    """Create Card Activity"""
+    # Set CORS headers for the preflight request
+    if request.method == "OPTIONS":
+        return ("", 200, headers)
+
+    payload = request.get_json()
+    if payload:
+        new_card_activity = FirestoreController().create_card_activity(payload)
+        return {"new_card_activity": new_card_activity}, 200, headers
+    return abort(400)
+
+
 @use_headers
 def get_all_activities_route(request, headers):
     """GET all activities endpoint route"""

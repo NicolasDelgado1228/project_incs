@@ -18,6 +18,12 @@ class State(str, Enum):
     unstarted = "unstarted"
 
 
+class Answer(BaseModel):
+    id: str = str(uuid4())
+    created_at: datetime = datetime.now()
+    selected_image: str
+
+
 class Assignment(BaseModel):
     id: str = str(uuid4())
     activity_id: str
@@ -25,4 +31,4 @@ class Assignment(BaseModel):
     assigned_by: str
     state: Optional[State]
     assigned_at: datetime = datetime.now()
-    answers: Optional[List[str]] = []
+    answers: Optional[List[Answer]] = []

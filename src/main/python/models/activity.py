@@ -11,8 +11,17 @@ from pydantic import BaseModel
 # Author: Nicolas Delgado
 
 
+class Card(BaseModel):
+    id: str = str(uuid4())
+    created_at: datetime = datetime.now()
+    images: List[str] = []
+    description: Optional[str]
+    correct_image: Optional[str]
+
+
 class Activity(BaseModel):
     id: str = str(uuid4())
     owner: str
     created_at: datetime = datetime.now()
-    images: Optional[List[str]]
+    description: Optional[str]
+    cards: Optional[List[Card]]
